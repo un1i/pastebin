@@ -1,16 +1,20 @@
 from logging.config import fileConfig
-from app.config import POSTGRES_DSN
+
 from sqlalchemy import engine_from_config
 from sqlalchemy import pool
-from app.paste.models import Base
+
 from alembic import context
+
+from app.config import POSTGRES_DSN
+
+from  app.paste.models import Base
 
 # this is the Alembic Config object, which provides
 # access to the values within the .ini file in use.
 config = context.config
 
 section = config.config_ini_section
-config.set_section_option(section, "POSTGRES_DSN", POSTGRES_DSN)
+config.set_section_option(section, 'POSTGRES_DSN', POSTGRES_DSN)
 
 # Interpret the config file for Python logging.
 # This line sets up loggers basically.

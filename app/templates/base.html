@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <title>Pastebin</title>
+    {% block head %} {% endblock %}
+</head>
+<body bgcolor="#464343">
+    <nav class="flex justify-between text-3xl my-3">
+        <ul class="flex ml-10">
+            <li>Pastebin</li>
+        </ul>
+    </nav>
+    <hr>
+    <div id="content">
+        {% block content %} {% endblock %}
+    </div>
+</body>
+</html>

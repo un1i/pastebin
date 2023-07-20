@@ -8,7 +8,14 @@ app = FastAPI()
 
 @app.get('/')
 async def default():
-    return {'id': generator.get_id()}
+    result = {
+        'id': generator.get_id()
+    }
+    return {
+        'status': 'ok',
+        'data': result,
+        'details': None
+    }
 
 
 @app.on_event('startup')

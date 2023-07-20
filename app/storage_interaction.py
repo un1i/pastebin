@@ -15,11 +15,13 @@ class ObjectStorage:
             endpoint_url='https://storage.yandexcloud.net'
         )
 
-    def download(self, filename):
-        path = self.__dir + filename
-        self.__os.download_file(self.__bucket, filename, path)
+    def put(self, filename, message):
+        self.__os.put_object(Bucket='pastebin', Key=filename, Body=message, StorageClass='Standard')
 
-    def upload(self, filename):
-        path = self.__dir + filename
-        self.__os.upload_file(path, self.__bucket, filename)
+    def get(self, filename):
+        response = self.__os.get_object(Bucket='pastebin', Key=filename)
+        return response['Body'].read().decode('UTF-8')
+
+
+
 
