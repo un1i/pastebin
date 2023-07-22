@@ -6,7 +6,16 @@
 
 
 {%block content%}
-{{ paste.message }}
-{{ paste.date_creation }}
-{{ paste.date_delete }}
+    <div class="grid grid-cols-6 ml-20 mt-5 text-x text-white">
+        <div class="col-span-3 place-self-center"> Дата создания: {{ paste.date_creation.strftime('%d.%m.%y %H:%M') }} UTC</div>
+        <div class="col-span-3"> Удалится: {{ paste.date_delete.strftime('%d.%m.%y %H:%M') }} UTC</div>
+    </div>
+
+    <div class="grid grid-cols-6 ml-20 mb-10 text-x text-white">
+        <div></div>
+        <div class="col-span-4 whitespace-pre-wrap">
+        <textarea id="message" rows="40" readonly class="block p-2.5 w-full text-sm rounded-lg border  bg-zinc-800 border-gray-600 placeholder-gray-400 text-white focus:ring-blue-500 focus:border-blue-500">{{ paste.message }}</textarea>
+        </div>
+        <div></div>
+    </div>
 {% endblock %}

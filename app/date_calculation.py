@@ -12,25 +12,25 @@ def get_days_amount(date, months_amount):
     return days
 
 
-def get_date_delete(date_creation, lifetime):
+def get_date_delete(date_creation, lifetime: lt):
     delta = dt.timedelta()
 
-    if lifetime == lt.TEN_MINUTES.value:
+    if lifetime == lt.TEN_MINUTES:
         delta = dt.timedelta(minutes=10)
-    elif lifetime == lt.ONE_WEEK.value:
+    elif lifetime == lt.ONE_WEEK:
         delta = dt.timedelta(weeks=1)
-    elif lifetime == lt.TWO_WEEKS.value:
+    elif lifetime == lt.TWO_WEEKS:
         delta = dt.timedelta(weeks=2)
-    elif lifetime == lt.ONE_MONTH.value:
+    elif lifetime == lt.ONE_MONTH:
         days = get_days_amount(date_creation, 1)
         delta = dt.timedelta(days=days)
-    elif lifetime == lt.THREE_MONTHS.value:
+    elif lifetime == lt.THREE_MONTHS:
         days = get_days_amount(date_creation, 3)
         delta = dt.timedelta(days=days)
-    elif lifetime == lt.SIX_MONTHS.value:
+    elif lifetime == lt.SIX_MONTHS:
         days = get_days_amount(date_creation, 6)
         delta = dt.timedelta(days=days)
-    elif lifetime == lt.ONE_YEAR.value:
+    elif lifetime == lt.ONE_YEAR:
         days = get_days_amount(date_creation, 12)
         delta = dt.timedelta(days=days)
 

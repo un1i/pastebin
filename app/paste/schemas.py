@@ -4,7 +4,7 @@ from enum import Enum
 from pydantic import BaseModel
 
 
-class LifeTime(Enum):
+class LifeTime(str, Enum):
     TEN_MINUTES = '10M'
     ONE_WEEK = '1W'
     TWO_WEEKS = '2W'

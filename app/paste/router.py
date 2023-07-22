@@ -51,7 +51,6 @@ async def add_paste(new_paste: schemas.PasteCreate, session: AsyncSession = Depe
 
     date_creation = datetime.datetime.utcnow()
     date_delete = get_date_delete(date_creation, new_paste.lifetime)
-
     stmt = sql.insert(md.Paste).values(id=response['data']['id'], date_creation=date_creation, date_delete=date_delete)
     await session.execute(stmt)
     await session.commit()
