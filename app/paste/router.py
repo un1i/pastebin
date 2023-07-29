@@ -1,9 +1,10 @@
-import datetime
+import datetime as dt
 import os
 import sys
 import requests
 import sqlalchemy as sql
 from fastapi import APIRouter, Depends
+from fastapi.exceptions import HTTPException
 from sqlalchemy.ext.asyncio import AsyncSession
 
 sys.path.append('..')
@@ -24,7 +25,14 @@ router = APIRouter(
 async def get_paste(id_paste: str, session: AsyncSession = Depends(db.get_async_session)):
     query = sql.select(md.Paste).where(md.Paste.id == id_paste)
     response = await session.execute(query)
-    response = response.scalars().all()[0]
+    response = response.scalars().all()
+    if len(response) == 0 or response[0].date_delete < dt.datetime.utcnow():
+        raise HTTPException(status_code=404, detail={
+            'status': 'error',
+            'data': None,
+            'details': 'У данной записи истек срок действия'
+        })
+    response = response[0]
 
     storage = si.ObjectStorage()
     message = storage.get(response.id)
@@ -49,7 +57,7 @@ async def add_paste(new_paste: schemas.PasteCreate, session: AsyncSession = Depe
     storage = si.ObjectStorage()
     storage.put(response['data']['id'], new_paste.message)
 
-    date_creation = datetime.datetime.utcnow()
+    date_creation = dt.datetime.utcnow()
     date_delete = get_date_delete(date_creation, new_paste.lifetime)
     stmt = sql.insert(md.Paste).values(id=response['data']['id'], date_creation=date_creation, date_delete=date_delete)
     await session.execute(stmt)

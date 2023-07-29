@@ -16,12 +16,16 @@ class ObjectStorage:
         )
 
     def put(self, filename, message):
-        self.__os.put_object(Bucket='pastebin', Key=filename, Body=message, StorageClass='Standard')
+        self.__os.put_object(Bucket=self.__bucket, Key=filename, Body=message, StorageClass='Standard')
 
     def get(self, filename):
-        response = self.__os.get_object(Bucket='pastebin', Key=filename)
+        response = self.__os.get_object(Bucket=self.__bucket, Key=filename)
         return response['Body'].read().decode('UTF-8')
 
+    def delete(self, items: list):
+        for_deletion = list(map(lambda el: {'Key': el}, items))
+        response = self.__os.delete_objects(Bucket=self.__bucket, Delete={'Objects': for_deletion})
+        return response
 
 
 
