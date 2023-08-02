@@ -9,10 +9,9 @@ from sqlalchemy.ext.asyncio import AsyncSession
 
 sys.path.append('..')
 sys.path.append(os.path.dirname(__file__))
-from app import database as db, config
 import schemas
-import models as md
-from app import storage_interaction as si
+from app import storage_interaction as si, config
+from database import database as db, models as md
 from app.date_calculation import get_date_delete
 
 router = APIRouter(

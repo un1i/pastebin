@@ -3,8 +3,8 @@ from celery.schedules import crontab
 import sqlalchemy as sql
 import datetime as dt
 import storage_interaction as si
-import database as db
-import paste.models as md
+from database import database as db
+import database.models as md
 
 celery = celery.Celery('tasks', broker='redis://localhost:6379')
 

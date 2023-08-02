@@ -7,7 +7,7 @@ from alembic import context
 
 from app.config import POSTGRES_DSN
 
-from  app.paste.models import Base
+from database.models import Base
 
 # this is the Alembic Config object, which provides
 # access to the values within the .ini file in use.

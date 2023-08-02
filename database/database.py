@@ -2,7 +2,7 @@ from typing import AsyncGenerator
 from sqlalchemy.ext.asyncio import AsyncSession, create_async_engine
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
-from config import POSTGRES_DSN
+from id_generator.config import POSTGRES_DSN
 
 DATABASE_URL = POSTGRES_DSN
 
