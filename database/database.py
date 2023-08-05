@@ -3,6 +3,9 @@ from sqlalchemy.ext.asyncio import AsyncSession, create_async_engine
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 from id_generator.config import POSTGRES_DSN
+from fastapi import Depends
+from fastapi_users.db import SQLAlchemyUserDatabase
+from database.models import User
 
 DATABASE_URL = POSTGRES_DSN
 
@@ -17,4 +20,8 @@ async def get_async_session() -> AsyncGenerator[AsyncSession, None]:
 
 def get_connect():
     return create_engine(DATABASE_URL).connect()
+
+
+async def get_user_db(session: AsyncSession = Depends(get_async_session)):
+    yield SQLAlchemyUserDatabase(session, User)
 

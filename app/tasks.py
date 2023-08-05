@@ -2,7 +2,7 @@ import celery
 from celery.schedules import crontab
 import sqlalchemy as sql
 import datetime as dt
-import storage_interaction as si
+import app.storage_interaction as si
 from database import database as db
 import database.models as md
 
@@ -14,10 +14,11 @@ def setup_periodic_tasks(sender, **kwargs):
     sender.add_periodic_task(
         crontab(minute=0, hour=0),
         clear_database.s(),
-        name='every midnight clear db')
+        name='every midnight clear db',
+        )
 
 
-@celery.task
+@celery.task(queue='clear_db')
 def clear_database():
     connect = db.get_connect()
     query = sql.select(md.Paste).where(md.Paste.date_delete < dt.datetime.utcnow())

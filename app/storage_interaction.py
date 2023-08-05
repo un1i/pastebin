@@ -1,5 +1,5 @@
 import boto3
-import config
+import app.config as config
 
 
 class ObjectStorage:
