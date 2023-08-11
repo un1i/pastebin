@@ -10,3 +10,7 @@ KEY_ID = os.environ.get('KEY_ID')
 KEY = os.environ.get('KEY')
 
 GEN_ID_URL = 'http://127.0.0.1:70'
+
+JWT_SECRET = os.environ.get('JWT_SECRET')
+
+MANAGER_AUTH = os.environ.get('MANAGER_AUTH')

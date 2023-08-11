@@ -5,7 +5,7 @@ from fastapi_users import BaseUserManager, IntegerIDMixin
 
 from database.database import get_user_db
 from database.models import User
-from auth.config import MANAGER_AUTH
+from app.config import MANAGER_AUTH
 
 SECRET = MANAGER_AUTH
 

@@ -1,0 +1,102 @@
+{% extends "base.html" %}
+
+{% block head %}
+<script>
+  function check_username(){
+    const name = document.getElementById('username')
+    if (name.value.length > 50){
+      name.style.border = '2px solid #ff0000';
+      alert('Длина имени не должна превышать 50 символов');
+      return false;
+    }
+    name.style.borderWidth = '0px';
+    return true;
+  }
+  function check_email(){
+    const EMAIL_REGEXP = /^(([^<>()[\].,;:\s@"]+(\.[^<>()[\].,;:\s@"]+)*)|(".+"))@(([^<>()[\].,;:\s@"]+\.)+[^<>()[\].,;:\s@"]{2,})$/iu;
+    const email = document.getElementById('email');
+    if (!EMAIL_REGEXP.test(email.value)){
+      email.style.border = '2px solid #ff0000';
+      alert('Некорректный адрес электронной почты');
+      return false;
+    }
+    email.style.borderWidth = '0px';
+    return true;
+  }
+  function check_password(){
+    let pass1 = document.getElementById('password').value;
+    let pass2 = document.getElementById('verify_password').value;
+
+    if (pass1 != pass2){
+      document.getElementById('password').style.border = '2px solid #ff0000';
+      document.getElementById('verify_password').style.border = '2px solid #ff0000';
+      alert('Пароли не совпадают!');
+      return false;
+    }
+    return true;
+
+
+  } 
+  async function send_data() {
+    if (!check_username() || !check_email() || !check_password())
+      return;
+
+    const response = await fetch('/auth/register',{
+      method: "POST",
+      headers: {"Accept": "application/json", "Content-Type": "application/json"},
+      body: JSON.stringify({
+        username: document.getElementById("username").value,
+        email: document.getElementById("email").value,
+        password: document.getElementById("password").value
+      })
+    });
+    if (response.ok === true) {
+      window.location.href = '/pages/login';
+    }
+    else {
+      window.alert("Произошла ошибка!")
+      const error = await response.json();
+      console.log(error.message);
+    }
+  }
+</script>
+{% endblock %}
+
+{% block content %}
+<div class="flex min-h-full flex-col justify-center px-6 py-12 lg:px-8">
+  <div class="sm:mx-auto sm:w-full sm:max-w-sm">
+    <h2 class="mt-10 text-center text-2xl font-bold leading-9 tracking-tight text-gray-900">Создать аккаунт</h2>
+  </div>
+  <div class="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
+    <div>
+      <label for="username" class="block text-sm font-medium leading-6 text-gray-900">Имя </label>
+      <div class="mt-2">
+        <input id="username" name="username" type="text" required class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
+      </div>
+    </div>
+    <div>
+      <label for="email" class="block text-sm font-medium leading-6 text-gray-900">Email </label>
+      <div class="mt-2">
+        <input id="email" name="email" type="email" autocomplete="email" required class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
+      </div>
+    </div>
+
+    <div>
+      <div class="flex items-center justify-between">
+        <label for="password" class="block text-sm font-medium leading-6 text-gray-900">Пароль</label>
+      </div>
+      <div class="mt-2">
+        <input id="password" name="password" type="password" autocomplete="current-password" required class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
+      </div>
+      <div class="mt-2">
+        <label for="verify_password" class="block text-sm font-medium leading-6 text-gray-900">Повторите пароль</label>
+        <input id="verify_password" name="password" type="password" autocomplete="current-password" required class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
+      </div>
+    </div>
+
+    <div class="mt-4">
+      <button onclick="send_data()" type="submit" class="flex w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">Зарегестрироваться</button>
+    </div>
+  </div>
+</div>
+{% endblock %}

@@ -7,11 +7,19 @@
     {% block head %} {% endblock %}
 </head>
 <body bgcolor="#464343">
-    <nav class="flex justify-between text-4xl my-3">
-        <ul class="flex ml-10">
-            <li class="text-white">Pastebin</li>
-        </ul>
-    </nav>
+    <div class="flex justify-between text-4xl my-3">
+        <div class="flex ml-10 text-white">
+                <a href="/pages/main" >Pastebin</a>
+        </div>
+        <div class="absolute top-0 right-0 text-white text-2xl mr-10 my-3">
+            {% if user is not none %}
+            <a href="#">{{ user.username }}</a>
+            {% else %}
+            <a class="mr-10" href="/pages/registration">Регистрация</a>
+            <a href="/pages/login">Войти</a>
+            {% endif %}
+        </div>
+    </div>
     <hr>
     <div id="content">
         {% block content %} {% endblock %}

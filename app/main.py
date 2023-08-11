@@ -1,18 +1,10 @@
 from fastapi import FastAPI
 from paste.router import router as router_posts
 from pages.router import router as router_pages
-from auth.auth import auth_backend
+from auth.auth import auth_backend, fastapi_users
 from auth.schemas import UserRead, UserCreate
-from fastapi_users import FastAPIUsers
-from database.models import User
-from auth.manager import get_user_manager
 
 app = FastAPI(title='Pastebin')
-
-fastapi_users = FastAPIUsers[User, int](
-    get_user_manager,
-    [auth_backend],
-)
 
 app.include_router(router_posts)
 
