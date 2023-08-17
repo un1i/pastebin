@@ -1,0 +1,15 @@
+{% extends '404.html' %}
+
+{% block content %}
+<div class="flex justify-between text-4xl ml-10 text-white my-3">
+            Ошибка 422
+        </div>
+        <div class="text-white mt-2 ml-10 text-xl">
+            Переданы некорректные данные
+            <p>
+                {% if info != none %}
+                    {{info.details}}
+                {% endif %}
+            </p>
+        </div>
+{% endblock %}

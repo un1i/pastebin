@@ -1,0 +1,35 @@
+{% extends 'profile.html' %}
+
+{% block script %}
+<script>
+    async function delete_paste(paste_id){
+        const url = '/paste/delete/' + paste_id;
+        const response = await fetch(url);
+        if (response.ok){
+            const button_id = 'delete_' + paste_id;
+            document.getElementById(button_id).innerText = 'удалено'
+            document.getElementById(button_id).onclick = null;
+        }
+        else{
+            alert('Произошла ошибка!')
+        }
+    }
+</script>
+{% endblock %}
+
+{% block auth_action %}
+<form action="/auth/jwt/logout" method="post">
+    <button type="submit">Выйти</button>
+</form>
+{% endblock %}
+
+{% block table_data %}
+{% for paste in profile.pastes %}
+    <tr>
+        <td><a href="/pages/paste/{{paste.id}}">{{ paste.id }}</a></td>
+        <td>{{ paste.date_creation.strftime('%d.%m.%y %H:%M') }} UTC</td>
+        <td>{{ paste.date_delete.strftime('%d.%m.%y %H:%M') }} UTC</td>
+        <td><button id="delete_{{paste.id}}" onclick="delete_paste('{{ paste.id }}')">удалить</button></td>
+    </tr>
+{% endfor %}
+{% endblock %}

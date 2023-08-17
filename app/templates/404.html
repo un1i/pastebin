@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <title>Pastebin</title>
+    {% block head %} {% endblock %}
+</head>
+<body bgcolor="#464343">
+    <div class="flex justify-between text-white text-4xl my-3 ml-10">
+                <a href="/pages/main" >Pastebin</a>
+    </div>
+    <hr>
+    <div id="content">
+        {% block content %}
+        <div class="flex justify-between text-4xl ml-10 text-white my-3">
+            Ошибка 404
+        </div>
+        <div class="text-white mt-2 ml-10 text-xl">
+            {% if info != 'Not Found' %}
+                {{info.details}}
+            {% else %}
+                Страница не найдена
+            {% endif %}
+        </div>
+        {% endblock %}
+    </div>
+</body>
+</html>

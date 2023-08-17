@@ -12,12 +12,14 @@
                 <a href="/pages/main" >Pastebin</a>
         </div>
         <div class="absolute top-0 right-0 text-white text-2xl mr-10 my-3">
+            {% block auth_action %}
             {% if user is not none %}
-            <a href="#">{{ user.username }}</a>
+            <a href="/pages/profile/{{user.id}}">{{ user.username }}</a>
             {% else %}
             <a class="mr-10" href="/pages/registration">Регистрация</a>
             <a href="/pages/login">Войти</a>
             {% endif %}
+            {% endblock%}
         </div>
     </div>
     <hr>

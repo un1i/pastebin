@@ -1,0 +1,51 @@
+{% extends 'base.html' %}
+
+{% block head %}
+<style>
+    table{
+        counter-reset: counter;
+    }
+    table tr:not(:first-child):before{
+        counter-increment: counter;
+        content: counter(counter);
+    }
+</style>
+{% block script %}{% endblock %}
+{% endblock %}
+
+{%block content %}
+<div class="grid grid-cols-6 text-white mt-10 ml-10">
+    <div class="col-span-2 text-4xl">
+        {{profile.user.username}}
+    </div>
+    <div class="col-span-2 text-xl mt-2">
+        Дата регистрации: {{profile.user.date_registration.strftime('%d.%m.%Y')}}
+    </div>
+</div>
+<div class="text-white mt-10 ml-10 text-2xl">
+    Записи:
+</div>
+{% if profile.pastes|length == 0 %}
+    <div class="text-white mt-2 ml-10 text-xl">
+        Нет созданных записей
+    </div>
+{% else %}
+    <table class="border-separate border-spacing-y-5 border-spacing-x-20 text-center text-xl text-white ml-10 mt-10">
+        <tr>
+            <th></th>
+            <th>ID</th>
+            <th>Дата создания</th>
+            <th>Дата удаления</th>
+        </tr>
+        {% block table_data %}
+        {% for paste in profile.pastes %}
+            <tr>
+                <td><a href="/pages/paste/{{paste.id}}">{{ paste.id }}</a></td>
+                <td>{{ paste.date_creation.strftime('%d.%m.%y %H:%M') }} UTC</td>
+                <td>{{ paste.date_delete.strftime('%d.%m.%y %H:%M') }} UTC</td>
+            </tr>
+        {% endfor %}
+        {% endblock %}
+    </table>
+{%endif%}
+{% endblock %}

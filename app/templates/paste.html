@@ -7,8 +7,21 @@
 
 {%block content%}
     <div class="grid grid-cols-6 ml-20 mt-5 text-x text-white">
-        <div class="col-span-3 place-self-center"> Дата создания: {{ paste.date_creation.strftime('%d.%m.%y %H:%M') }} UTC</div>
-        <div class="col-span-3"> Удалится: {{ paste.date_delete.strftime('%d.%m.%y %H:%M') }} UTC</div>
+        {% if paste.author is not none %}
+        <div class="col-span-2 place-self-center">
+            <a href="/pages/profile/{{paste.author.id}}">Автор: {{ paste.author.username }}</a>
+        </div>
+        {% else %}
+        <div class="col-span-2 place-self-center">
+            Автор: гость
+        </div>
+        {% endif %}
+        <div class="col-span-2">
+            Дата создания: {{ paste.date_creation.strftime('%d.%m.%y %H:%M') }} UTC
+        </div>
+        <div class="col-span-2">
+            Удалится: {{ paste.date_delete.strftime('%d.%m.%y %H:%M') }} UTC
+        </div>
     </div>
 
     <div class="grid grid-cols-6 ml-20 mb-10 text-x text-white">

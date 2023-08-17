@@ -15,7 +15,7 @@
       const data = await response.json();
       const paste_id = data['data']['id']
       console.log(paste_id);
-      window.location.href = '/pages/?id_paste=' + paste_id;
+      window.location.href = '/pages/paste/' + paste_id;
     }
     else {
       window.alert("Произошла ошибка!")

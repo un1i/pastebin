@@ -2,6 +2,7 @@ import random
 from sqlalchemy.ext.asyncio import AsyncSession
 import sqlalchemy as sql
 import database.models as md
+from fastapi.exceptions import HTTPException
 
 
 class Generator:
@@ -31,11 +32,23 @@ class Generator:
 
     @staticmethod
     async def __get_exist_ids_in_database(ids: set, session: AsyncSession):
-        query = sql.Select(md.Paste).where(md.Paste.id.in_(ids))
-        response = await session.execute(query)
-        response = response.scalars().all()
-        exist_ids = set(map(lambda x: x.id, response))
-        return exist_ids
+        try:
+            query = sql.Select(md.Paste).where(md.Paste.id.in_(ids))
+            response = await session.execute(query)
+            response = response.scalars().all()
+            exist_ids = set(map(lambda x: x.id, response))
+            return exist_ids
+        except Exception as e:
+            print(e)
+            raise HTTPException(
+                status_code=500,
+                detail={
+                    'status': 'error',
+                    'data': None,
+                    'details': 'Возникла ошибка при подключении к базе данных'
+                }
+            )
+
 
     def __len__(self):
         return len(self.__ids)
