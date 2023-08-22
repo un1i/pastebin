@@ -14,11 +14,33 @@
             alert('Произошла ошибка!')
         }
     }
+    async function form_handler(event){
+        event.preventDefault()
+
+        const response = await fetch('/auth/jwt/logout', {
+            method: 'POST',
+        })
+
+    if (response.ok){
+      window.location.href = '/pages/main'
+    }
+    else if (response.status === 401){
+      alert('Вы не авторизованы!')
+    }
+    else{
+      alert('Произошла ошибка!')
+    }
+  }
+
+  window.onload=function () {
+    const application_form = document.getElementById('logout')
+    application_form.addEventListener('submit', form_handler)
+  }
 </script>
 {% endblock %}
 
 {% block auth_action %}
-<form action="/auth/jwt/logout" method="post">
+<form id="logout" action="/auth/jwt/logout" method="post">
     <button type="submit">Выйти</button>
 </form>
 {% endblock %}

@@ -1,5 +1,5 @@
 from fastapi import FastAPI
-from fastapi.exceptions import RequestValidationError, HTTPException
+from fastapi.exceptions import RequestValidationError
 from paste.router import router as router_posts
 from pages.router import router as router_pages
 from app.profile.router import router as router_profile
@@ -9,6 +9,7 @@ from auth.schemas import UserRead, UserCreate
 
 exception_handlers = {
     500: exc_handlers.internal_exception_handler,
+    503: exc_handlers.unavailable_exception_handler,
     404: exc_handlers.not_found_exception_handler,
     422: exc_handlers.unprocessable_content_handler,
     RequestValidationError: exc_handlers.validate_exception_handler,

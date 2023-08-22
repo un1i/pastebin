@@ -51,12 +51,12 @@ async def get_profile(user_id: int, session: AsyncSession = Depends(db.get_async
     except (OSError, SQLAlchemyError) as e:
         print(e)
         raise exc.HTTPException(
-            status_code=500,
+            status_code=503,
             details='Ошибка получения данных из базы даннх'
         )
     except Exception as e:
         print(e)
         raise exc.HTTPException(
-            status_code=500,
+            status_code=503,
             details='Ошибка выполнения запроса'
         )

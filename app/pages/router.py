@@ -5,7 +5,6 @@ from app.profile.router import get_profile
 from fastapi.templating import Jinja2Templates
 from app.auth.auth import fastapi_users
 from database.models import User
-import app.exception as exc
 
 router = APIRouter(
     prefix='/pages',

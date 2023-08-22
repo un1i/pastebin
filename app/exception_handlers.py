@@ -1,6 +1,8 @@
 from fastapi import Request
 from fastapi.exceptions import HTTPException, RequestValidationError
+from fastapi_users.router.common import ErrorCode
 from pages.router import templates
+import exception
 
 
 async def not_found_exception_handler(request: Request, exc: HTTPException):
@@ -31,6 +33,14 @@ async def validate_exception_handler(request: Request, exc: RequestValidationErr
 async def internal_exception_handler(request: Request, exc: HTTPException):
     return templates.TemplateResponse(
         '500.html',
+        {'request': request},
+        status_code=500,
+    )
+
+
+async def unavailable_exception_handler(request: Request, exc: HTTPException):
+    return templates.TemplateResponse(
+        '503.html',
         {'request': request},
         status_code=exc.status_code,
     )

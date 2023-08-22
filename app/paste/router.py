@@ -22,7 +22,7 @@ import app.exception as exc
 
 router = APIRouter(
     prefix='/paste',
-    tags=['Paste']
+    tags=['Paste'],
 )
 
 current_user = fastapi_users.current_user(optional=True)
@@ -81,19 +81,19 @@ async def get_paste(id_paste: str, session: AsyncSession = Depends(db.get_async_
     except (OSError, SQLAlchemyError) as e:
         print(e)
         raise exc.HTTPException(
-            status_code=500,
+            status_code=503,
             details='Ошибка получения данных из базы данных'
         )
     except (BotoCoreError, ClientError) as e:
         print(e)
         raise exc.HTTPException(
-            status_code=500,
+            status_code=503,
             details='Ошибка при получении данных из облачного хранилища'
         )
     except Exception as e:
         print(e)
         raise exc.HTTPException(
-            status_code=500,
+            status_code=503,
             details='Ошибка выполнения запроса'
         )
 
@@ -136,33 +136,33 @@ async def add_paste(new_paste: schemas.PasteCreate,
     except ConnectionError as e:
         print(e)
         raise HTTPException(
-            status_code=500,
+            status_code=503,
             detail='Не удается подключиться к сервису генерации идентификаторов'
         )
 
     except RequestException as e:
         print(e)
         raise exc.HTTPException(
-            status_code=500,
+            status_code=503,
             details='Возникла ошибка при получении идентификатора'
         )
 
     except (BotoCoreError, ClientError) as e:
         print(e)
         raise exc.HTTPException(
-            status_code=500,
+            status_code=503,
             details='Ошибка при получении данных из облачного хранилища'
         )
     except (OSError, SQLAlchemyError) as e:
         print(e)
         raise exc.HTTPException(
-            status_code=500,
+            status_code=503,
             details='Ошибка при сохранении данных в базу данных'
         )
     except Exception as e:
         print(e)
         raise exc.HTTPException(
-            status_code=500,
+            status_code=503,
             details='Ошибка выполнения запроса'
         )
 
@@ -211,19 +211,19 @@ async def delete_paste(id_paste: str,
     except (BotoCoreError, ClientError) as e:
         print(e)
         raise exc.HTTPException(
-            status_code=500,
+            status_code=503,
             details='Ошибка при получении данных из облачного хранилища'
         )
     except (OSError, SQLAlchemyError) as e:
         print(e)
         raise exc.HTTPException(
-            status_code=500,
+            status_code=503,
             details='Ошибка при сохранении данных в базу данных'
         )
     except Exception as e:
         print(e)
         raise exc.HTTPException(
-            status_code=500,
+            status_code=503,
             details='Ошибка выполнения запроса'
         )
 
