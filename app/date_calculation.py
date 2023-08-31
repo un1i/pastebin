@@ -1,4 +1,4 @@
-from paste.schemas import LifeTime as lt
+from app.paste.schemas import LifeTime as lt
 import datetime as dt
 import calendar
 

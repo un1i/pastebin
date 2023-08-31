@@ -13,7 +13,7 @@ router = APIRouter(
 
 current_user = fastapi_users.current_user(optional=True)
 
-templates = Jinja2Templates(directory='templates')
+templates = Jinja2Templates(directory='app/templates')
 
 
 def get_redirect_to_profile(user_id: int):

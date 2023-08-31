@@ -1,8 +1,9 @@
 import celery
 import requests
-import config
+from id_generator import config
 
-celery = celery.Celery('tasks', broker='redis://localhost:6379')
+REDIS = config.REDIS
+celery = celery.Celery('tasks', broker=REDIS)
 
 
 @celery.on_after_configure.connect
@@ -14,6 +15,6 @@ def setup_periodic_tasks(sender, **kwargs):
     )
 
 
-@celery.task
+@celery.task(queue='check_ids')
 def check():
     return requests.get(config.CHECK_IDS_URL).json()

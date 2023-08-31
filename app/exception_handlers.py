@@ -1,8 +1,6 @@
 from fastapi import Request
 from fastapi.exceptions import HTTPException, RequestValidationError
-from fastapi_users.router.common import ErrorCode
-from pages.router import templates
-import exception
+from app.pages.router import templates
 
 
 async def not_found_exception_handler(request: Request, exc: HTTPException):

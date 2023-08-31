@@ -5,8 +5,10 @@ import datetime as dt
 import app.storage_interaction as si
 from database import database as db
 import database.models as md
+from app import config
 
-celery = celery.Celery('tasks', broker='redis://localhost:6379')
+REDIS = config.REDIS
+celery = celery.Celery('tasks', broker=REDIS)
 
 
 @celery.on_after_configure.connect

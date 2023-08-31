@@ -8,7 +8,7 @@ from app.main import app
 from fastapi.testclient import TestClient
 import pytest
 
-from app.config import POSTGRES_DSN_TEST
+from database.config import POSTGRES_DSN_TEST
 from database.database import get_async_session
 from database.models import Base
 

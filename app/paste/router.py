@@ -1,6 +1,4 @@
 import datetime as dt
-import os
-import sys
 import requests
 from requests.exceptions import RequestException, ConnectionError
 import sqlalchemy as sql
@@ -10,10 +8,7 @@ from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy.orm import selectinload
 from botocore.exceptions import BotoCoreError, ClientError
 from sqlalchemy.exc import SQLAlchemyError
-
-sys.path.append('..')
-sys.path.append(os.path.dirname(__file__))
-import schemas
+from app.paste import schemas
 from app import storage_interaction as si, config
 from database import database as db, models as md
 from app.date_calculation import get_date_delete

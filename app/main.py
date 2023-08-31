@@ -1,11 +1,11 @@
 from fastapi import FastAPI
 from fastapi.exceptions import RequestValidationError
-from paste.router import router as router_posts
-from pages.router import router as router_pages
+from app.paste.router import router as router_posts
+from app.pages.router import router as router_pages
 from app.profile.router import router as router_profile
 import app.exception_handlers as exc_handlers
-from auth.auth import auth_backend, fastapi_users
-from auth.schemas import UserRead, UserCreate
+from app.auth.auth import auth_backend, fastapi_users
+from app.auth.schemas import UserRead, UserCreate
 
 exception_handlers = {
     500: exc_handlers.internal_exception_handler,

@@ -4,36 +4,53 @@
 <script>
   function check_username(){
     const name = document.getElementById('username')
+      const name_error = document.getElementById('username_error')
     if (name.value.length > 50){
-      name.style.border = '2px solid #ff0000';
-      alert('Длина имени не должна превышать 50 символов');
+      name.style.border = '2px solid #ff0000'
+      name_error.innerHTML = 'Длина имени не должна превышать 50 символов'
       return false;
     }
     name.style.borderWidth = '0px';
+    name_error.innerHTML = ''
     return true;
   }
   function check_email(){
     const EMAIL_REGEXP = /^(([^<>()[\].,;:\s@"]+(\.[^<>()[\].,;:\s@"]+)*)|(".+"))@(([^<>()[\].,;:\s@"]+\.)+[^<>()[\].,;:\s@"]{2,})$/iu;
-    const email = document.getElementById('email');
+    const email = document.getElementById('email')
+    const email_error = document.getElementById('email_error')
     if (!EMAIL_REGEXP.test(email.value)){
-      email.style.border = '2px solid #ff0000';
-      alert('Некорректный адрес электронной почты');
-      return false;
+      email.style.border = '2px solid #ff0000'
+      email_error.innerHTML = 'Некорректный адрес электронной почты'
+      return false
     }
-    email.style.borderWidth = '0px';
-    return true;
+    email.style.borderWidth = '0px'
+    email_error.innerHTML = ''
+    return true
   }
   function check_password(){
-    let pass1 = document.getElementById('password').value;
-    let pass2 = document.getElementById('verify_password').value;
+    let pass1 = document.getElementById('password')
+    let pass2 = document.getElementById('verify_password')
+    const pass_error = document.getElementById('password_error')
+      const PASS_REGEXP = /^[a-zA-z0-9@_%-]+$/
 
-    if (pass1 != pass2){
-      document.getElementById('password').style.border = '2px solid #ff0000';
-      document.getElementById('verify_password').style.border = '2px solid #ff0000';
-      alert('Пароли не совпадают!');
-      return false;
+    if (pass1.value !== pass2.value){
+      pass1.style.border = '2px solid #ff0000'
+      pass2.style.border = '2px solid #ff0000'
+      pass_error.innerHTML = 'Пароли не совпадают!'
+      return false
     }
-    return true;
+
+    if (pass1.value.length < 8 || !PASS_REGEXP.test(pass1.value)){
+        pass1.style.border = '0px'
+        pass2.style.border = '0px'
+        pass_error.innerHTML = 'Пароль должен состоять хотя бы из 8 символов и может содержать только латинские буквы, цифры и сиволы @_%-'
+        return false
+    }
+    pass1.style.border = '0px'
+    pass2.style.border = '0px'
+    pass_error.innerHTML = ''
+    return true
+
 
 
   } 
@@ -68,38 +85,40 @@
 {% block content %}
 <div class="flex min-h-full flex-col justify-center px-6 py-12 lg:px-8">
   <div class="sm:mx-auto sm:w-full sm:max-w-sm">
-    <h2 class="mt-10 text-center text-2xl font-bold leading-9 tracking-tight text-gray-900">Создать аккаунт</h2>
+    <h2 class="mt-10 text-center text-2xl font-bold leading-9 tracking-tight text-white">Создать аккаунт</h2>
   </div>
   <div class="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
     <div>
-      <label for="username" class="block text-sm font-medium leading-6 text-gray-900">Имя </label>
+      <label for="username" class="block text-sm font-medium leading-6 text-white">Имя </label>
       <div class="mt-2">
-        <input id="username" name="username" type="text" required class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
+        <input id="username" name="username" type="text" required class="block w-full rounded-md bg-zinc-800 border-0 py-1.5 text-white shadow-sm">
       </div>
+        <div id="username_error" class="text-red-600 text-sm"></div>
     </div>
     <div>
-      <label for="email" class="block text-sm font-medium leading-6 text-gray-900">Email </label>
+      <label for="email" class="block text-sm font-medium leading-6 text-white">Email </label>
       <div class="mt-2">
-        <input id="email" name="email" type="email" autocomplete="email" required class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
+        <input id="email" name="email" type="email" autocomplete="email" required class="block w-full rounded-md bg-zinc-800 border-0 py-1.5 text-white shadow-sm">
       </div>
       <div id="email_error" class="text-red-600 text-sm"></div>
     </div>
 
     <div>
       <div class="flex items-center justify-between">
-        <label for="password" class="block text-sm font-medium leading-6 text-gray-900">Пароль</label>
+        <label for="password" class="block text-sm font-medium leading-6 text-white">Пароль</label>
       </div>
       <div class="mt-2">
-        <input id="password" name="password" type="password" autocomplete="current-password" required class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
+        <input id="password" name="password" type="password" autocomplete="current-password" required class="block w-full rounded-md bg-zinc-800 border-0 py-1.5 text-white shadow-sm">
       </div>
       <div class="mt-2">
-        <label for="verify_password" class="block text-sm font-medium leading-6 text-gray-900">Повторите пароль</label>
-        <input id="verify_password" name="password" type="password" autocomplete="current-password" required class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
+        <label for="verify_password" class="block text-sm font-medium leading-6 text-white">Повторите пароль</label>
+        <input id="verify_password" name="password" type="password" autocomplete="current-password" required class="block w-full rounded-md bg-zinc-800 border-0 py-1.5 text-white shadow-sm">
       </div>
+        <div id="password_error" class="text-red-600 text-sm"></div>
     </div>
 
     <div class="mt-4">
-      <button onclick="send_data()" type="submit" class="flex w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">Зарегестрироваться</button>
+      <button onclick="send_data()" type="submit" class="flex w-full justify-center rounded-md bg-zinc-800 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-blue-700 focus:outline-none focus:ring-blue-800">Зарегестрироваться</button>
     </div>
   </div>
 </div>
